@@ -12,6 +12,8 @@
 #include <bitset>
 #if COMPILER_MINGW
 #include <cpuid.h>
+#else
+#include <intrin.h>
 #endif
 #include <float.h> // for _clearfp / _controlfp_s in MaskFpExceptions
 #include <mlang.h>
