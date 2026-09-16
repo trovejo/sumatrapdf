@@ -13064,6 +13064,16 @@ static LRESULT FrameOnCommand(MainWindow* win, HWND hwnd, UINT msg, WPARAM wp, L
             UpdateDocumentColors();
             break;
         }
+        case CmdToggleGrayscale: {
+            bool enabled = !AtomicBoolGet(&gRenderCache->grayscalePageColors);
+            AtomicBoolSet(&gRenderCache->grayscalePageColors, enabled);
+
+            // Page pixels changed. Invalidate cached and in-flight renders.
+            // Overlays are outside this rendering path and keep their colors.
+            gRenderCache->darkModeEpoch++;
+            RerenderEverything();
+            break;
+        }
 
         case CmdToggleEngineeringDrawingEnhance: {
             DisplayModel* fixedDm = win->AsFixed();
