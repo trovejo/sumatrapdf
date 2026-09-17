@@ -17995,6 +17995,11 @@ int APIENTRY WinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevIns
 
     LoadSettings();
     UpdateSettings(flags);
+
+    // FixedPageUI.Grayscale defines the startup state. Shift+B changes only
+    // the current session and does not modify the persisted preference.
+    AtomicBoolSet(&gRenderCache->grayscalePageColors, gSettings->fixedPageUI.grayscale);
+
     if (gMyWindowWasEmbedded) {
         str::ReplaceWithCopy(&gSettings->scrollbars, StrL("windows"));
     }
